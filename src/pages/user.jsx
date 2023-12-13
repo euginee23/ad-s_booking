@@ -50,7 +50,7 @@ const User = () => {
         link.download = 'reservation_id.txt';
         link.click();
     };
-
+    
     const handleGenerateId = () => {
         const randomId = Math.floor(1000000000000 + Math.random() * 9000000000000);
         setFormData((prevData) => ({ ...prevData, reservationId: randomId.toString() }));
@@ -60,6 +60,7 @@ const User = () => {
         e.preventDefault();
         handleGenerateId();
 
+        const formattedDate = formData.schedule.toISOString().slice(0, 19).replace('T', ' ');
         fetch('http://localhost:5000/reservations', {
             method: 'POST',
             headers: {
@@ -71,7 +72,7 @@ const User = () => {
                 middleName: formData.middleName,
                 lastName: formData.lastName,
                 serviceType: formData.serviceType,
-                schedule: formData.schedule,
+                schedule: formattedDate,
                 description: formData.description,
                 editor: formData.editor,
             }),
