@@ -36,7 +36,7 @@ const User = () => {
             description: '',
             editor: '',
         },
-        validationSchema: reservationSchema,  // Use the imported schema here
+        validationSchema: reservationSchema, 
         onSubmit: (values) => {
             handleGenerateId();
 
@@ -57,14 +57,24 @@ const User = () => {
                     editor: values.editor,
                 }),
             })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                formik.resetForm();
-            })
-            .catch((error) => console.error('Error submitting reservation:', error));
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    formik.resetForm();
+                    setSubmissionSuccess(true);
+                })
+                .catch((error) => console.error('Error submitting reservation:', error));
         },
     });
+
+    const [submissionSuccess, setSubmissionSuccess] = useState(false);
+
+    useEffect(() => {
+        if (submissionSuccess) {
+            alert('Reservation submitted successfully!');
+            setSubmissionSuccess(false);
+        }
+    }, [submissionSuccess]);
 
     const handleChange = (e) => {
         formik.handleChange(e);

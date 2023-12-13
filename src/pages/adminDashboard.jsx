@@ -76,7 +76,7 @@ const ApprovedReservationsContent = () => {
               <td>{reservation.middleName}</td>
               <td>{reservation.lastName}</td>
               <td>{reservation.serviceType}</td>
-              <td>{reservation.schedule}</td>
+              <td>{new Date(reservation.schedule).toLocaleString()}</td>
               <td>{reservation.description}</td>
               <td>{reservation.editor}</td>
               <td>{reservation.status}</td>
@@ -269,7 +269,7 @@ const ReservationHistoryContent = () => {
               <td>{reservation.middleName}</td>
               <td>{reservation.lastName}</td>
               <td>{reservation.serviceType}</td>
-              <td>{reservation.schedule}</td>
+              <td>{new Date(reservation.schedule).toLocaleString()}</td>
               <td>{reservation.description}</td>
               <td>{reservation.editor}</td>
               <td>{reservation.status}</td>
