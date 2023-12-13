@@ -5,7 +5,7 @@ const ApprovedReservationsContent = () => {
   const [approvedReservations, setApprovedReservations] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/approved')
+    fetch('https://ads-booking-service.onrender.com/approved')
       .then((response) => response.json())
       .then((data) => {
         setApprovedReservations(data);
@@ -22,7 +22,7 @@ const ApprovedReservationsContent = () => {
   };
 
   const updateStatus = (reservationId, status) => {
-    fetch(`http://localhost:5000/reservations/${reservationId}`, {
+    fetch(`https://ads-booking-service.onrender.com/reservations/${reservationId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ const ReservationManagementContent = () => {
   const [approvedMessage, setApprovedMessage] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/reservations')
+    fetch('https://ads-booking-service.onrender.com/reservations')
       .then((response) => response.json())
       .then((data) => {
         setReservations(data);
@@ -106,7 +106,7 @@ const ReservationManagementContent = () => {
   }, []);
 
   const handleApprove = (reservationId) => {
-    fetch(`http://localhost:5000/reservations/${reservationId}`, {
+    fetch(`https://ads-booking-service.onrender.com/reservations/${reservationId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ const ReservationManagementContent = () => {
 
   const handleDelete = (reservationId) => {
     if (showDeleteConfirmation(reservationId)) {
-      fetch(`http://localhost:5000/reservations/${reservationId}`, {
+      fetch(`https://ads-booking-service.onrender.com/reservations/${reservationId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -214,7 +214,7 @@ const ReservationHistoryContent = () => {
   const [filter, setFilter] = useState('All');
 
   useEffect(() => {
-    fetch('http://localhost:5000/reservations')
+    fetch('https://ads-booking-service.onrender.com/reservations')
       .then((response) => response.json())
       .then((data) => {
         setReservations(data);
@@ -288,7 +288,7 @@ const ManageEditorsContent = () => {
   const [address, setAddress] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/editors')
+    fetch('https://ads-booking-service.onrender.com/editors')
       .then((response) => response.json())
       .then((data) => {
         setEditors(data);
@@ -303,7 +303,7 @@ const ManageEditorsContent = () => {
       address: address,
     };
 
-    fetch('http://localhost:5000/editors', {
+    fetch('https://ads-booking-service.onrender.com/editors', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -317,7 +317,7 @@ const ManageEditorsContent = () => {
         return response.json();
       })
       .then(() => {
-        fetch('http://localhost:5000/editors')
+        fetch('https://ads-booking-service.onrender.com/editors')
           .then((response) => response.json())
           .then((data) => {
             setEditors(data);
@@ -337,7 +337,7 @@ const ManageEditorsContent = () => {
   };
 
   const handleRemoveEditor = (editorId) => {
-    fetch(`http://localhost:5000/editors/${editorId}`, {
+    fetch(`https://ads-booking-service.onrender.com/editors/${editorId}`, {
       method: 'DELETE',
     })
       .then((response) => {
@@ -409,7 +409,7 @@ const ManageServicesContent = () => {
   const [serviceName, setServiceName] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/services')
+    fetch('https://ads-booking-service.onrender.com/services')
       .then((response) => response.json())
       .then((data) => {
         setServices(data);
@@ -418,7 +418,7 @@ const ManageServicesContent = () => {
   }, []);
 
   const handleAddService = () => {
-    fetch('http://localhost:5000/services', {
+    fetch('https://ads-booking-service.onrender.com/services', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -435,7 +435,7 @@ const ManageServicesContent = () => {
       })
       .then(() => {
         // Fetch the updated list of services from the server
-        fetch('http://localhost:5000/services')
+        fetch('https://ads-booking-service.onrender.com/services')
           .then((response) => response.json())
           .then((data) => {
             // Set the state with the updated list of services
@@ -449,7 +449,7 @@ const ManageServicesContent = () => {
   };
 
   const handleRemoveService = (serviceId) => {
-    fetch(`http://localhost:5000/services/${serviceId}`, {
+    fetch(`https://ads-booking-service.onrender.com/services/${serviceId}`, {
       method: 'DELETE',
     })
       .then((response) => {

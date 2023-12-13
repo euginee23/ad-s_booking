@@ -41,7 +41,7 @@ const User = () => {
             handleGenerateId();
 
             const formattedDate = values.schedule.toISOString().slice(0, 19).replace('T', ' ');
-            fetch('http://localhost:5000/reservations', {
+            fetch('https://ads-booking-service.onrender.com/reservations', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -23,7 +23,7 @@ const Login = () => {
     console.log('Form Data:', formData);
 
     try {
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch('https://ads-booking-service.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const Login = () => {
     e.preventDefault();
   
     try {
-      const response = await fetch(`http://localhost:5000/checkReservation/${formData.reservationId}`);
+      const response = await fetch(`https://ads-booking-service.onrender.com/checkReservation/${formData.reservationId}`);
   
       if (response.ok) {
         const data = await response.json();
