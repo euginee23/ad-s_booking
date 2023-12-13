@@ -7,6 +7,11 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// Starting route
+app.get('/', (_req, res) => {
+  res.send('HELLO SERVER');
+});
+
 //Log in
 app.post('/login', (req, res) => {
   const { username, password } = req.body;

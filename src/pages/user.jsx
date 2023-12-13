@@ -1,97 +1,94 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { reservationSchema } from '../validation/validationSchema.js';
 import '../css/user.css';
 
 const User = () => {
-    const [formData, setFormData] = useState({
-        reservationId: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        serviceType: '',
-        schedule: new Date(),
-        description: '',
-        editor: '',
-    });
+    const editorEndpoint = 'http://localhost:5000/editors';
+    const serviceEndpoint = 'http://localhost:5000/services';
 
     const [editorOptions, setEditorOptions] = useState([]);
     const [serviceOptions, setServiceOptions] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/editors')
+        fetch(editorEndpoint)
             .then((response) => response.json())
             .then((data) => setEditorOptions(data))
             .catch((error) => console.error('Error fetching editors:', error));
 
-        fetch('http://localhost:5000/services')
+        fetch(serviceEndpoint)
             .then((response) => response.json())
             .then((data) => setServiceOptions(data))
             .catch((error) => console.error('Error fetching services:', error));
     }, []);
 
+    const formik = useFormik({
+        initialValues: {
+            reservationId: '',
+            firstName: '',
+            middleName: '',
+            lastName: '',
+            serviceType: '',
+            schedule: new Date(),
+            description: '',
+            editor: '',
+        },
+        validationSchema: reservationSchema,  // Use the imported schema here
+        onSubmit: (values) => {
+            handleGenerateId();
+
+            const formattedDate = values.schedule.toISOString().slice(0, 19).replace('T', ' ');
+            fetch('http://localhost:5000/reservations', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    reservation_id: values.reservationId,
+                    firstName: values.firstName,
+                    middleName: values.middleName,
+                    lastName: values.lastName,
+                    serviceType: values.serviceType,
+                    schedule: formattedDate,
+                    description: values.description,
+                    editor: values.editor,
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                formik.resetForm();
+            })
+            .catch((error) => console.error('Error submitting reservation:', error));
+        },
+    });
+
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
+        formik.handleChange(e);
     };
 
     const handleScheduleChange = (date) => {
-        setFormData((prevData) => ({ ...prevData, schedule: date }));
+        formik.setFieldValue('schedule', date);
     };
 
     const handleEditorChange = (e) => {
-        setFormData((prevData) => ({ ...prevData, editor: e.target.value }));
+        formik.handleChange(e);
     };
 
     const handleSaveToFile = () => {
-        const blob = new Blob([formData.reservationId], { type: 'text/plain' });
+        const blob = new Blob([formik.values.reservationId], { type: 'text/plain' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = 'reservation_id.txt';
         link.click();
     };
-    
+
     const handleGenerateId = () => {
         const randomId = Math.floor(1000000000000 + Math.random() * 9000000000000);
-        setFormData((prevData) => ({ ...prevData, reservationId: randomId.toString() }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        handleGenerateId();
-
-        const formattedDate = formData.schedule.toISOString().slice(0, 19).replace('T', ' ');
-        fetch('http://localhost:5000/reservations', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                reservation_id: formData.reservationId,
-                firstName: formData.firstName,
-                middleName: formData.middleName,
-                lastName: formData.lastName,
-                serviceType: formData.serviceType,
-                schedule: formattedDate,
-                description: formData.description,
-                editor: formData.editor,
-            }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                setFormData({
-                    reservationId: '',
-                    firstName: '',
-                    middleName: '',
-                    lastName: '',
-                    serviceType: '',
-                    schedule: new Date(),
-                    description: '',
-                    editor: '',
-                });
-            })
-            .catch((error) => console.error('Error submitting reservation:', error));
+        formik.setFieldValue('reservationId', randomId.toString());
     };
 
     return (
@@ -99,14 +96,14 @@ const User = () => {
             <h2 className='user-head'>FILL RESERVATION</h2>
             <div className="form-container">
                 <h3 className='user-container-head'>Reservation Form</h3>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={formik.handleSubmit}>
                     <div className="form-group">
                         <label>
                             Reservation ID:
                             <input
                                 type="text"
                                 name="reservationId"
-                                value={formData.reservationId}
+                                value={formik.values.reservationId}
                                 readOnly
                             />
                             <button type="button" className='generatebtn' onClick={handleGenerateId}>
@@ -117,6 +114,9 @@ const User = () => {
                             </button>
                             <h4> NOTE: Save reservation ID before submitting </h4>
                         </label>
+                        {formik.touched.reservationId && formik.errors.reservationId ? (
+                            <div className="error">{formik.errors.reservationId}</div>
+                        ) : null}
                     </div>
                     <div className="form-group">
                         <label>
@@ -124,10 +124,13 @@ const User = () => {
                             <input
                                 type="text"
                                 name="firstName"
-                                value={formData.firstName}
+                                value={formik.values.firstName}
                                 onChange={handleChange}
                                 required
                             />
+                            {formik.touched.firstName && formik.errors.firstName ? (
+                                <div className="error">{formik.errors.firstName}</div>
+                            ) : null}
                         </label>
                     </div>
                     <div className="form-group">
@@ -136,10 +139,13 @@ const User = () => {
                             <input
                                 type="text"
                                 name="middleName"
-                                value={formData.middleName}
+                                value={formik.values.middleName}
                                 onChange={handleChange}
                                 required
                             />
+                            {formik.touched.middleName && formik.errors.middleName ? (
+                                <div className="error">{formik.errors.middleName}</div>
+                            ) : null}
                         </label>
                     </div>
                     <div className="form-group">
@@ -148,10 +154,13 @@ const User = () => {
                             <input
                                 type="text"
                                 name="lastName"
-                                value={formData.lastName}
+                                value={formik.values.lastName}
                                 onChange={handleChange}
                                 required
                             />
+                            {formik.touched.lastName && formik.errors.lastName ? (
+                                <div className="error">{formik.errors.lastName}</div>
+                            ) : null}
                         </label>
                     </div>
                     <div className="form-group">
@@ -159,7 +168,7 @@ const User = () => {
                             Service Type:
                             <select
                                 name="serviceType"
-                                value={formData.serviceType}
+                                value={formik.values.serviceType}
                                 onChange={handleChange}
                                 required
                             >
@@ -170,17 +179,23 @@ const User = () => {
                                     </option>
                                 ))}
                             </select>
+                            {formik.touched.serviceType && formik.errors.serviceType ? (
+                                <div className="error">{formik.errors.serviceType}</div>
+                            ) : null}
                         </label>
                     </div>
                     <div className="form-group">
                         <label>
                             Enter Schedule:
                             <DatePicker
-                                selected={formData.schedule}
+                                selected={formik.values.schedule}
                                 onChange={handleScheduleChange}
                                 showTimeSelect
                                 dateFormat="yyyy-MM-dd h:mm aa"
                             />
+                            {formik.touched.schedule && formik.errors.schedule ? (
+                                <div className="error">{formik.errors.schedule}</div>
+                            ) : null}
                         </label>
                     </div>
                     <div className="form-group">
@@ -188,10 +203,13 @@ const User = () => {
                             Description:
                             <textarea
                                 name="description"
-                                value={formData.description}
+                                value={formik.values.description}
                                 onChange={handleChange}
                                 required
                             />
+                            {formik.touched.description && formik.errors.description ? (
+                                <div className="error">{formik.errors.description}</div>
+                            ) : null}
                         </label>
                     </div>
                     <div className="form-group">
@@ -199,7 +217,7 @@ const User = () => {
                             Select Editor:
                             <select
                                 name="editor"
-                                value={formData.editor}
+                                value={formik.values.editor}
                                 onChange={handleEditorChange}
                                 required
                             >
@@ -210,6 +228,9 @@ const User = () => {
                                     </option>
                                 ))}
                             </select>
+                            {formik.touched.editor && formik.errors.editor ? (
+                                <div className="error">{formik.errors.editor}</div>
+                            ) : null}
                         </label>
                     </div>
                     <button type="submit">Submit Reservation</button>
