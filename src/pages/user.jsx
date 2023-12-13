@@ -7,8 +7,8 @@ import { reservationSchema } from '../validation/validationSchema.js';
 import '../css/user.css';
 
 const User = () => {
-    const editorEndpoint = 'http://localhost:5000/editors';
-    const serviceEndpoint = 'http://localhost:5000/services';
+    const editorEndpoint = 'https://ads-booking-service.onrender.com/editors';
+    const serviceEndpoint = 'https://ads-booking-service.onrender.com/services';
 
     const [editorOptions, setEditorOptions] = useState([]);
     const [serviceOptions, setServiceOptions] = useState([]);
