@@ -1,0 +1,112 @@
+.user-dashboard {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Style the form container */
+.form-container {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    max-width: 500px;
+}
+
+.user-head {
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+.user-container-head {
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+/* Style form groups */
+.form-group {
+    margin-bottom: 10px;
+}
+
+/* Style form labels */
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Style form inputs */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd; /* Specify border color */
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+}
+
+/* Style generate and copy buttons */
+.generate-button,
+.copy-button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px; /* Add space between the buttons */
+}
+
+.generate-button:hover,
+.copy-button:hover {
+    background-color: #555;
+}
+
+/* Style submit button */
+button {
+    background-color: #529153;
+    color: #fff;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+button:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+/* Style generate button */
+.generatebtn {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px; /* Add space between the buttons */
+}
+
+.generatebtn:hover {
+  background-color: #555;
+}
+
+/* Style copy button */
+.copybtn {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.copybtn:hover {
+  background-color: #555;
+}

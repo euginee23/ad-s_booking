@@ -1,0 +1,164 @@
+body {
+  margin: 0;
+}
+
+.admin-dashboard {
+  display: flex;
+  height: 100vh;
+}
+
+.admin-sidebar {
+  background-color: #333;
+  padding: 20px;
+  color: white;
+  box-sizing: border-box;
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+  width: 200px;
+}
+
+.content {
+  margin-left: 200px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.tab {
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  color: #fff;
+  text-align: left;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tab:hover {
+  background-color: #555;
+}
+
+.tab.active {
+  background-color: #4caf50;
+}
+
+.content {
+  padding: 20px;
+  height: 100%;
+  overflow: auto;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h3 {
+  color: #333;
+  margin-bottom: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+thead {
+  background-color: #333;
+  color: white;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+button:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+th,
+td {
+  position: relative;
+}
+
+/* Style button */
+.done-button,
+.cancel-button,
+.approve-button,
+.delete-button {
+  display: flex;
+  margin: 10px;
+  justify-content: center;
+}
+
+.done-button,
+.cancel-button,
+.approve-button,
+.delete-button {
+  width: 120px;
+}
+
+.done-button .approve-button {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.remove-button,
+.cancel-button,
+.delete-button {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.filter {
+  margin-bottom: 20px;
+}
+
+.filter-label {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-right: 10px;
+}
+
+select {
+  width: 200px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+select:hover {
+  border-color: #555;
+}
+
+select:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.7);
+}
+
+.services-container,
+.editor-container {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 30px auto;
+}
